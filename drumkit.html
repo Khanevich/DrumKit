@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="drum.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+
+<script>
+
+
+var keys = document.getElementsByClassName('keys')[0];
+var key = document.getElementsByClassName('key');
+var audio = document.getElementsByTagName('audio');
+
+
+keys.onmousedown = function(event){
+var target = event.target;
+while(target != this){
+for(var i=0; i<key.length; i++){
+if(target == key[i]) {
+target.classList.add('playing');
+audio[i].play();
+document.onmouseup = function(event){
+  target.classList.remove('playing');
+
+}
+return;
+}
+}
+target = target.parentNode;
+}
+}
+
+document.onkeydown = function(event){
+
+for(var i= 0; i<audio.length; i++){
+  var tab = audio[i].getAttribute('data-key');
+   if(tab == event.keyCode){
+     audio[i].play();
+     key[i].classList.add('playing');
+
+     document.onkeyup = function (event){
+       for(var i=0; i<key.length; i++){
+      if(event.keyCode == key[i].getAttribute('data-key') )   {
+       key[i].classList.remove('playing');
+     }
+     }
+     }
+     break;
+   }
+
+}
+
+// var el = document.querySelector("audio[data-key='" + event.keyCode + "']")
+// console.log("audio[data-key=" + event.keyCode + "]")
+// if(el) {
+//   el.play()
+// }
+
+}
+
+
+
+
+</script>
+
+
+</body>
+</html>
